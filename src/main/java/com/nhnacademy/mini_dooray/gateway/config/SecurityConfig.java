@@ -23,6 +23,8 @@ public class SecurityConfig{
                                 .passwordParameter("password")
                                 .loginProcessingUrl("/login")
                                 .defaultSuccessUrl("/")
+                )
+                .csrf(csrf -> csrf.disable()
                 );
 
         return http.build();

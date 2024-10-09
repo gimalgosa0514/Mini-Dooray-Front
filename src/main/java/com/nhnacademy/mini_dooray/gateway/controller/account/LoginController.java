@@ -1,4 +1,4 @@
-package com.nhnacademy.mini_dooray.gateway.controller;
+package com.nhnacademy.mini_dooray.gateway.controller.account;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
