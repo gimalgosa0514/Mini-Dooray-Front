@@ -1,8 +1,8 @@
-package com.nhnacademy.mini_dooray.gateway.controller.account;
+package com.nhnacademy.mini_dooray.gateway.account.controller;
 
-import com.nhnacademy.mini_dooray.gateway.domain.MemberRegistrationRequest;
-import com.nhnacademy.mini_dooray.gateway.exception.MemberRegisterException;
-import com.nhnacademy.mini_dooray.gateway.service.AccountService;
+import com.nhnacademy.mini_dooray.gateway.account.domain.MemberRegistrationRequest;
+import com.nhnacademy.mini_dooray.gateway.account.exception.MemberRegisterException;
+import com.nhnacademy.mini_dooray.gateway.account.service.AccountService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

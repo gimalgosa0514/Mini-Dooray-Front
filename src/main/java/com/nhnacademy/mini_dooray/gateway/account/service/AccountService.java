@@ -1,8 +1,8 @@
-package com.nhnacademy.mini_dooray.gateway.service;
+package com.nhnacademy.mini_dooray.gateway.account.service;
 
-import com.nhnacademy.mini_dooray.gateway.domain.MemberRegistrationRequest;
-import com.nhnacademy.mini_dooray.gateway.domain.MemberRegistrationResponse;
-import com.nhnacademy.mini_dooray.gateway.exception.MemberRegisterException;
+import com.nhnacademy.mini_dooray.gateway.account.domain.MemberRegistrationRequest;
+import com.nhnacademy.mini_dooray.gateway.account.domain.MemberRegistrationResponse;
+import com.nhnacademy.mini_dooray.gateway.account.exception.MemberRegisterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

@@ -33,7 +33,7 @@ public class SecurityConfig{
                                 .passwordParameter("password")
                                 .loginProcessingUrl("/login")
                                 .defaultSuccessUrl("/")
-<<<<<<< HEAD
+
                                 .successHandler(loginSuccessHandler)
                 )
                 .logout(logout -> logout
@@ -41,12 +41,11 @@ public class SecurityConfig{
                         .logoutSuccessHandler(logoutSuccessHandler)
                         .invalidateHttpSession(true)
                         .deleteCookies("SESSION")
-                        .permitAll());
-=======
+                        .permitAll()
                 )
                 .csrf(csrf -> csrf.disable()
                 );
->>>>>>> d9fa0b72bc4c4f468a790b84e9cd4bd0c749bfca
+
 
         return http.build();
     }
