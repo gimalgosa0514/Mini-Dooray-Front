@@ -12,7 +12,7 @@ public class MemberRegistrationRequest {
 
     @NotNull
     @Length(min = 5, max = 20)
-    private String username;
+    private String id;
 
     @NotNull
     @Length(min = 8, max = 20)

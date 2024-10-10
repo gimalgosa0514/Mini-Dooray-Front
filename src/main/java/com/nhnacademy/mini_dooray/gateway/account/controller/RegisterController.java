@@ -1,7 +1,7 @@
 package com.nhnacademy.mini_dooray.gateway.account.controller;
 
 import com.nhnacademy.mini_dooray.gateway.account.domain.MemberRegistrationRequest;
-import com.nhnacademy.mini_dooray.gateway.account.exception.MemberRegisterException;
+import com.nhnacademy.mini_dooray.gateway.account.exception.MemberRegisterFailedException;
 import com.nhnacademy.mini_dooray.gateway.account.service.AccountService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class RegisterController {
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute MemberRegistrationRequest request, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            throw new MemberRegisterException("회원가입 오류");
+            throw new MemberRegisterFailedException("회원가입 오류");
         }
 
         accountService.register(request);
@@ -32,8 +32,8 @@ public class RegisterController {
         return "redirect:/login";
     }
 
-    @ExceptionHandler(MemberRegisterException.class)
-    public String handleMemberRegisterException(MemberRegisterException ex, Model model) {
+    @ExceptionHandler(MemberRegisterFailedException.class)
+    public String handleMemberRegisterException(MemberRegisterFailedException ex, Model model) {
         model.addAttribute("error", ex.getMessage());
         return "register";
     }

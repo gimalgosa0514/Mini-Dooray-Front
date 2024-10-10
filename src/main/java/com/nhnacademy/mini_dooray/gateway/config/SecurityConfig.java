@@ -13,7 +13,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig{
 
-
     @Autowired
     private CustomLoginSuccessHandler loginSuccessHandler;
 
@@ -28,8 +27,7 @@ public class SecurityConfig{
 
                 .formLogin(formLogin ->
                         formLogin.loginPage("/login")
-
-                                .usernameParameter("username")
+                                .usernameParameter("id")
                                 .passwordParameter("password")
                                 .loginProcessingUrl("/login")
                                 .defaultSuccessUrl("/")

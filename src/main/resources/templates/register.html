@@ -29,8 +29,8 @@
 
   <form id="registrationForm" action="/register" method="POST">
     <div class="mb-3">
-      <label for="username" class="form-label">아이디</label>
-      <input type="text" class="form-control" id="username" name="username" placeholder="5-20자 아이디" required>
+      <label for="id" class="form-label">아이디</label>
+      <input type="text" class="form-control" id="id" name="id" placeholder="5-20자 아이디" required>
       <div class="error-message" id="usernameError">아이디를 입력해 주세요.</div>
     </div>
     <div class="mb-3">
@@ -63,12 +63,12 @@
     $('#registrationForm').on('submit', function(event) {
       var password = $('#password').val();
       var confirmPassword = $('#confirmPassword').val();
-      var username = $('#username').val();
+      var id = $('#id').val();
       var email = $('#email').val();
       var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
       // 사용자 입력 확인
-      if (!username) {
+      if (!id) {
         event.preventDefault();
         $('#usernameError').show();
       } else {
