@@ -5,23 +5,32 @@ import com.nhnacademy.mini_dooray.gateway.account.domain.MemberRegistrationRespo
 import com.nhnacademy.mini_dooray.gateway.account.domain.MemberLoginResponse;
 import com.nhnacademy.mini_dooray.gateway.account.exception.LoginFailedException;
 import com.nhnacademy.mini_dooray.gateway.account.exception.MemberRegisterFailedException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-//TODO#1 api url 추가
+@RequiredArgsConstructor
 public class AccountService {
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final String ACCOUNT_API_URL = "http://localhost:8081";
+    private final RestTemplate restTemplate;
 
     public MemberRegistrationResponse register(MemberRegistrationRequest request) {
 
-        String url = "";
+        String uri = "/register";
 
-        ResponseEntity<MemberRegistrationResponse> response = restTemplate.postForEntity(url, request, MemberRegistrationResponse.class);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<MemberRegistrationRequest> entity = new HttpEntity<>(request, httpHeaders);
+
+        ResponseEntity<MemberRegistrationResponse> response = restTemplate.postForEntity(ACCOUNT_API_URL + uri, entity, MemberRegistrationResponse.class);
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         }
@@ -30,9 +39,10 @@ public class AccountService {
     }
 
     public MemberLoginResponse doLogin(String userId){
-        String url = "";
+        String uri = "/member/" + userId;
 
-        ResponseEntity<MemberLoginResponse> response = restTemplate.postForEntity(url, userId, MemberLoginResponse.class);
+        ResponseEntity<MemberLoginResponse> response = restTemplate.getForEntity(ACCOUNT_API_URL + uri, MemberLoginResponse.class);
+
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         }
