@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>ProjectRegister</title>
+    <!-- Bootstrap CSS (CDN) -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        .login-container {
+            margin-top: 100px;
+        }
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+            padding: 15px;
+            margin: auto;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .alert {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container login-container">
+    <div class="login-form card shadow-sm p-4">
+        <h2 class="text-center mb-4">Project Register</h2>
+        <form th:action="@{/project/create}" method="post">
+            <div class="form-group mb-3">
+                <label for="projectName" class="form-label">Project Name</label>
+                <input type="text" id="projectName" name="projectName" class="form-control" placeholder="Enter Title" required/>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Confirm</button>
+            <br/>
+            <!-- TODO : 등록하기 전 페이지로 돌아갈 수 있도록 하기. -->
+            <input type="hidden" name="memberId" th:value="${memberId}" />
+            <button type="button" class="btn btn-primary w-100">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies (CDN) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

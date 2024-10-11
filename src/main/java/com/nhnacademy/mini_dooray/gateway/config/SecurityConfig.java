@@ -2,6 +2,7 @@ package com.nhnacademy.mini_dooray.gateway.config;
 
 import com.nhnacademy.mini_dooray.gateway.handler.CustomLoginSuccessHandler;
 import com.nhnacademy.mini_dooray.gateway.handler.CustomLogoutSuccessHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,13 +12,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig{
 
-    @Autowired
-    private CustomLoginSuccessHandler loginSuccessHandler;
 
-    @Autowired
-    private CustomLogoutSuccessHandler logoutSuccessHandler;
+    private final CustomLoginSuccessHandler loginSuccessHandler;
+
+
+    private final CustomLogoutSuccessHandler logoutSuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
