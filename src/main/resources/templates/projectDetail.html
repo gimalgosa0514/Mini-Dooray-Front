@@ -30,6 +30,7 @@
       <ul class="list-group">
         <li class="list-group-item" th:each="member : ${project.memberList}" th:text="${member}">멤버 아이디</li>
       </ul>
+      <a class="btn btn-primary mt-3" th:href="@{/project/{projectId}/task/create(projectId=${projectId})}">멤버 추가</a>
     </div>
 
     <!-- 업무 목록 탭 -->
@@ -53,10 +54,11 @@
         </tr>
         </tbody>
       </table>
+      <a class="btn btn-primary mt-3" th:href="@{/project/{projectId}/task/create(projectId=${projectId})}">업무 추가</a>
     </div>
   </div>
 
-  <a class="btn btn-primary mt-3" th:href="@{/project/{projectId}/task/create(projectId=${projectId})}">업무 추가</a>
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
