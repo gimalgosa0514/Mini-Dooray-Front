@@ -2,8 +2,8 @@ package com.nhnacademy.mini_dooray.gateway.task.controller;
 
 import com.nhnacademy.mini_dooray.gateway.task.adapter.TaskAdapter;
 import com.nhnacademy.mini_dooray.gateway.task.domain.TaskRegistrationRequest;
-import com.nhnacademy.mini_dooray.gateway.task.domain.TaskRequest;
 import com.nhnacademy.mini_dooray.gateway.task.domain.TaskResponse;
+import com.nhnacademy.mini_dooray.gateway.task.domain.TaskUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +40,17 @@ public class TaskController {
     }
 
     @PutMapping("/project/{projectId}/task/{taskId}")
-    public String updateTask(@PathVariable Long projectId, @PathVariable Long taskId, @RequestBody TaskRequest taskRequest) {
-        
+    public String updateTask(@PathVariable Long projectId, @PathVariable Long taskId, @RequestBody TaskUpdateRequest taskUpdateRequest) {
+        taskAdapter.updateTask(projectId, taskId, taskUpdateRequest);
+
+        return "redirect:/project/" + projectId + "/task";
     }
+
+    @DeleteMapping("/project/{projectId}/task/{taskId}")
+    public String deleteTask(@PathVariable Long projectId, @PathVariable Long taskId) {
+        taskAdapter.deleteTask(projectId, taskId);
+
+        return "redirect:/project/" + projectId + "/task";
+    }
+
 }
