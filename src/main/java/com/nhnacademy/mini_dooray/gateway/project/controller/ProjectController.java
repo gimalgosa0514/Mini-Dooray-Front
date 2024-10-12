@@ -2,15 +2,20 @@ package com.nhnacademy.mini_dooray.gateway.project.controller;
 
 import com.nhnacademy.mini_dooray.gateway.account.service.AccountService;
 import com.nhnacademy.mini_dooray.gateway.milestone.service.MilestoneService;
+import com.nhnacademy.mini_dooray.gateway.project.domain.Project;
 import com.nhnacademy.mini_dooray.gateway.project.domain.ProjectCreateRequest;
 import com.nhnacademy.mini_dooray.gateway.project.domain.ProjectDetailResponse;
 import com.nhnacademy.mini_dooray.gateway.project.domain.ProjectMemberAddRequest;
 import com.nhnacademy.mini_dooray.gateway.project.service.ProjectService;
+import com.nhnacademy.mini_dooray.gateway.util.MemberIdUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,7 +32,8 @@ public class ProjectController {
         ModelAndView mav = new ModelAndView("project");
         mav.addObject("memberId", memberId);
         //TODO: api와 연결 후 실행 시 주석 해제
-        //mav.addObject("projects",projectService.projectList());
+        List<Project> projects = projectService.getProjects(memberId);
+        mav.addObject("projects",projects);
 
         return mav;
     }
@@ -42,9 +48,9 @@ public class ProjectController {
     // 프로젝트 생성 포스트 부분
     @PostMapping("/project/create")
     public String saveProject(@ModelAttribute ProjectCreateRequest projectCreateRequest, Model model) {
-
+        projectCreateRequest.setMemberId(MemberIdUtil.getMemberId());
         //TODO: api와 연결 후 실행 시 주석 해제
-        //        projectAdapter.createProject(projectCreateRequest);
+        projectService.createProject(projectCreateRequest);
         return "redirect:/"+projectCreateRequest.getMemberId()+"/project";
     }
 

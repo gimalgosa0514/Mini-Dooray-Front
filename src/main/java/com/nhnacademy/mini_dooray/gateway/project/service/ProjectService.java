@@ -21,10 +21,10 @@ public class ProjectService {
     private final Adapter adapter;
     private final String URL = "http://localhost:8082/api";
 
-    public List<ProjectDetailResponse> getProjects(String memberId) {
-        String url = URL+"/project/member"+memberId;
+    public List<Project> getProjects(String memberId) {
+        String url = URL+"/project/member/"+memberId;
 
-        ResponseEntity<List<ProjectDetailResponse>> response = adapter.getList(url, new ParameterizedTypeReference<List<ProjectDetailResponse>>(){});
+        ResponseEntity<List<Project>> response = adapter.getList(url, new ParameterizedTypeReference<List<Project>>(){});
 
         if(response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
