@@ -30,7 +30,7 @@
       <ul class="list-group">
         <li class="list-group-item" th:each="member : ${project.memberList}" th:text="${member}">멤버 아이디</li>
       </ul>
-      <a class="btn btn-primary mt-3" th:href="@{/project/${projectId}/member}">멤버 추가</a>
+      <a class="btn btn-primary mt-3" th:href="@{/project/{projectId}/member(projectId=${projectId})}">멤버 추가</a>
     </div>
 
     <!-- 업무 목록 탭 -->

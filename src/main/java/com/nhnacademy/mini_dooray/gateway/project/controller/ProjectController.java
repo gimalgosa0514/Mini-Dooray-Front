@@ -54,11 +54,19 @@ public class ProjectController {
         return mav;
     }
 
-//    @GetMapping("/project/{projectId}/member")
-//    public ModelAndView viewProjectMember(@PathVariable String projectId) {
-//        ModelAndView mav = new ModelAndView("projectMember");
-//
-//    }
+    @GetMapping("/project/{projectId}/member")
+    public ModelAndView viewProjectMember(@PathVariable String projectId) {
+        ModelAndView mav = new ModelAndView("projectAddMember");
+        mav.addObject("projectId", projectId);
+        return mav;
+    }
 
+    @PostMapping("project/{projectId}/member")
+    public String addProjectMember(@PathVariable String projectId,
+                                         @RequestParam String memberId) {
+
+        // 데이터를 주고 받은 후 넘겨 받아야 함.
+        return "redirect:/project/"+projectId;
+    }
 
 }
