@@ -34,4 +34,27 @@ public class MilestoneController {
         milestoneService.attachMilestone(projectId,taskId,milestoneAttachRequest);
         return "/redirect:/project/"+projectId+"/task/"+taskId;
     }
+
+    @GetMapping("/project/{projectId}/milestone")
+    public String milestoneList(@PathVariable String projectId,Model model) {
+
+        milestoneService.getMilestones(projectId);
+        model.addAttribute("milestones", milestoneService.getMilestones(projectId));
+        return "milestoneList";
+    }
+
+    @PutMapping("/project/{projectId}/milestone/{milestoneId}")
+    public String reviseMilestone(@PathVariable String projectId, @PathVariable String milestoneId, @ModelAttribute MilestoneDto milestoneDto) {
+
+        milestoneService.reviseMilestone(projectId,milestoneId,milestoneDto);
+        return "redirect:/project/"+projectId;
+    }
+
+    @DeleteMapping("/project/{projectId}/milestone/{milestoneId}")
+    public String deleteMilestone(@PathVariable String projectId, @PathVariable String milestoneId) {
+        milestoneService.deleteMilestoneFromProject(projectId,milestoneId);
+        return "redirect:/project/"+projectId;
+    }
+
+
 }
