@@ -20,6 +20,12 @@
     <li class="nav-item">
       <a class="nav-link" id="tasks-tab" data-toggle="tab" href="#tasks" role="tab" aria-controls="tasks" aria-selected="false">업무 목록</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" id="milestone-tab" data-toggle="tab" href="#milestone" role="tab" aria-controls="milestone" aria-selected="false">마일스톤 목록</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="tag-tab" data-toggle="tab" href="#tag" role="tab" aria-controls="tag" aria-selected="false">태그 목록</a>
+    </li>
   </ul>
 
   <!-- 탭 콘텐츠 -->
@@ -56,9 +62,25 @@
       </table>
       <a class="btn btn-primary mt-3" th:href="@{/project/{projectId}/task/create(projectId=${projectId})}">업무 추가</a>
     </div>
+
+    <!-- 마일스톤 목록 탭 -->
+    <div class="tab-pane fade" id="milestone" role="tabpanel" aria-labelledby="milestone-tab">
+      <h3>마일스톤 목록</h3>
+      <ul class="list-group">
+        <li class="list-group-item" th:each="milestone : ${project.milestoneList}" th:text="${milestone}">마일스톤</li>
+      </ul>
+      <a class="btn btn-primary mt-3" th:href="@{/project/{projectId}/milestone/create(projectId=${projectId})}">마일스톤 추가</a>
+    </div>
+
+    <!-- 태그 목록 탭 -->
+    <div class="tab-pane fade" id="tag" role="tabpanel" aria-labelledby="tag-tab">
+      <h3>태그 목록</h3>
+      <ul class="list-group">
+        <li class="list-group-item" th:each="tag : ${project.tagList}" th:text="${tag}">태그</li>
+      </ul>
+      <a class="btn btn-primary mt-3" th:href="@{/project/{projectId}/tag/create(projectId=${projectId})}">태그 추가</a>
+    </div>
   </div>
-
-
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
