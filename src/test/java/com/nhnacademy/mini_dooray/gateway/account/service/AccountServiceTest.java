@@ -2,7 +2,6 @@ package com.nhnacademy.mini_dooray.gateway.account.service;
 
 import com.nhnacademy.mini_dooray.gateway.account.domain.MemberLoginResponse;
 import com.nhnacademy.mini_dooray.gateway.account.domain.MemberRegistrationRequest;
-import com.nhnacademy.mini_dooray.gateway.account.domain.MemberRegistrationResponse;
 import com.nhnacademy.mini_dooray.gateway.account.exception.LoginFailedException;
 import com.nhnacademy.mini_dooray.gateway.account.exception.MemberRegisterFailedException;
 import org.junit.jupiter.api.Test;
@@ -32,7 +31,7 @@ class AccountServiceTest {
     void register_success() {
         // Given
         MemberRegistrationRequest request = new MemberRegistrationRequest();
-        MemberRegistrationResponse expectedResponse = new MemberRegistrationResponse();
+        MemberRegistrationRes expectedResponse = new MemberRegistrationResponse();
         when(restTemplate.postForEntity(anyString(), eq(request), eq(MemberRegistrationResponse.class)))
                 .thenReturn(new ResponseEntity<>(expectedResponse, HttpStatus.OK));
 
