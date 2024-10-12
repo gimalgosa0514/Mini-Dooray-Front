@@ -39,8 +39,8 @@ public class TaskController {
         return "redirect:/project/" + projectId + "/task";
     }
 
-//    @PutMapping("/project/{projectId}/task/{taskId}")
-//    public String updateTask(@PathVariable Long projectId, @PathVariable Long taskId, @RequestBody TaskRequest taskRequest) {
-//
-//    }
+    @PutMapping("/project/{projectId}/task/{taskId}")
+    public String updateTask(@PathVariable Long projectId, @PathVariable Long taskId, @RequestBody TaskRequest taskRequest) {
+        
+    }
 }
