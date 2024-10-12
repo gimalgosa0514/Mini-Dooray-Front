@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class TaskResponse {
+    private Long taskId;
     private String taskTitle;
     private String memberId;
     private String taskContent;

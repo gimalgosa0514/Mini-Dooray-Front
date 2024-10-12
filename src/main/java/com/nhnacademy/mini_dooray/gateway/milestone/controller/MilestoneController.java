@@ -9,6 +9,6 @@ public class MilestoneController {
 
     @GetMapping("/project/{projectId}/task/{taskId}/milestone")
     public String viewMilestone(@PathVariable String projectId, @PathVariable String taskId) {
-        
+        return "home";
     }
 }

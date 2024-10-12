@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentResponse {
+    private Long commentId;
     private String memberId;
     private String commentContent;
 }
