@@ -22,6 +22,10 @@
         .alert {
             margin-top: 10px;
         }
+        .register-link {
+            text-align: center;
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
@@ -49,6 +53,11 @@
                 You have been logged out successfully.
             </div>
         </form>
+
+        <!-- 회원가입 버튼 -->
+        <div class="register-link">
+            <a th:href="@{/register}" class="btn btn-link">Sign Up</a>
+        </div>
     </div>
 </div>
 

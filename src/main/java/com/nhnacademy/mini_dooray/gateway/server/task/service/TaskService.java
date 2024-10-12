@@ -14,6 +14,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,7 +45,7 @@ public class TaskService {
             return response.getBody();
         }
 
-        throw new TaskGetException("GET error!");
+        return new ArrayList<>();
     }
     public MessageDto createTask(Long projectId, TaskRegistrationRequest taskRegistrationRequest) {
         String uri = "/project/" + projectId + "/task";

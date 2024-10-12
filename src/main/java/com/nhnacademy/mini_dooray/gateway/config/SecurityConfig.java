@@ -14,10 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig{
 
-
     private final CustomLoginSuccessHandler loginSuccessHandler;
-
-
     private final CustomLogoutSuccessHandler logoutSuccessHandler;
 
     @Bean
@@ -31,7 +28,7 @@ public class SecurityConfig{
                                 .usernameParameter("id")
                                 .passwordParameter("password")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/")
+                                .defaultSuccessUrl("/project/")
                                 .failureUrl("/login?error")
                                 .successHandler(loginSuccessHandler)
                 )
@@ -53,4 +50,5 @@ public class SecurityConfig{
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }

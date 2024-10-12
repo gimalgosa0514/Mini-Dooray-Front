@@ -14,6 +14,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,7 +32,7 @@ public class TagService {
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         }
-        throw new TagsGetFailedException("get tag list failed");
+        return new ArrayList<>();
     }
 
     public MessageDto createTag(Long projectId, TagRegistrationRequest request){

@@ -36,7 +36,7 @@ public class MilestoneController {
     }
 
     @GetMapping("/project/{projectId}/milestone")
-    public String milestoneList(@PathVariable String projectId,Model model) {
+    public String milestoneList(@PathVariable Long projectId,Model model) {
 
         milestoneService.getMilestones(projectId);
         model.addAttribute("milestones", milestoneService.getMilestones(projectId));

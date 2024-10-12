@@ -11,6 +11,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -54,13 +55,13 @@ public class MilestoneService {
     }
 
 
-    public List<MilestoneListResponse> getMilestones(String projectId) {
+    public List<MilestoneListResponse> getMilestones(Long projectId) {
         String uri = "/project/"+projectId+"/milestone";
         ResponseEntity<List<MilestoneListResponse>> response = adapter.getList(URL + uri, new ParameterizedTypeReference<List<MilestoneListResponse>>() {});
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         }
-        throw new MilestonesGetException("GET error!");
+        return new ArrayList<>();
     }
 
     public MessageDto reviseMilestone(String projectId, String milestoneId, MilestoneDto milestoneDto) {

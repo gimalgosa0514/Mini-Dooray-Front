@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AccountService {
 
-    private final String ACCOUNT_API_URL = "http://localhost:8081";
+    private final String ACCOUNT_API_URL = "http://localhost:8081/api";
     private final PasswordEncoder passwordEncoder;
     private final Adapter adapter;
 

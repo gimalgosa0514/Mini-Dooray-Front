@@ -52,7 +52,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="task : ${project.taskList}">
+        <tr th:each="task : ${taskList}">
           <td th:text="${task.taskTitle}"></td>
           <td th:text="${task.memberId}"></td>
           <td th:text="${task.taskContent}"></td>

@@ -14,7 +14,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,15 +30,21 @@ public class ProjectService {
     public List<Project> getProjects(String memberId) {
         String url = URL+"/project/member/"+memberId;
 
-        ResponseEntity<List<Project>> response = adapter.getList(url, new ParameterizedTypeReference<List<Project>>(){});
+        try{
+            ResponseEntity<List<Project>> response = adapter.getList(url, new ParameterizedTypeReference<List<Project>>(){});
 
-        if(response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody();
+            if(response.getStatusCode().is2xxSuccessful()) {
+                return response.getBody();
+            }
+
+            return new ArrayList<>();
         }
-        throw new ProjectGetException("GET error!");
+       catch (HttpClientErrorException | HttpServerErrorException e) {
+            return new ArrayList<>();
+       }
     }
 
-    public ProjectDetailResponse getProjectDetail(String projectId) {
+    public ProjectDetailResponse getProjectDetail(Long projectId) {
         String url = URL+"/project/"+projectId;
 
         ResponseEntity<ProjectDetailResponse> response = adapter.get(url,ProjectDetailResponse.class);

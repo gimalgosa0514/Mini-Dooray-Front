@@ -20,9 +20,9 @@ public class TaskController {
     @GetMapping("/project/{projectId}/task")
     public String getTask(@PathVariable Long projectId, Model model) {
         List<TaskResponse> responses = taskService.getTasks(projectId);
-        model.addAttribute("tasks", responses);
+        model.addAttribute("taskList", responses);
 
-        return "projectTasks";
+        return "projectDetail";
     }
 
     @GetMapping("/project/{projectId}/task/{taskId}")

@@ -7,7 +7,9 @@ import com.nhnacademy.mini_dooray.gateway.server.project.domain.ProjectCreateReq
 import com.nhnacademy.mini_dooray.gateway.server.project.domain.ProjectDetailResponse;
 import com.nhnacademy.mini_dooray.gateway.server.project.domain.ProjectMemberAddRequest;
 import com.nhnacademy.mini_dooray.gateway.server.project.service.ProjectService;
-import com.nhnacademy.mini_dooray.gateway.common.util.MemberIdUtil;
+import com.nhnacademy.mini_dooray.gateway.common.util.AuthUtil;
+import com.nhnacademy.mini_dooray.gateway.server.tag.service.TagService;
+import com.nhnacademy.mini_dooray.gateway.server.task.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,17 +23,19 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
-    private final AccountService accountService;
+    private final TaskService taskService;
     private final MilestoneService milestoneService;
-
+    private final TagService tagService;
 
     // 멤버가 속한 프로젝트 목록
-    @GetMapping("/{memberId}/project")
-    public ModelAndView viewProject(@PathVariable String memberId) {
+    @GetMapping("/project")
+    public ModelAndView viewProject() {
         ModelAndView mav = new ModelAndView("project");
+        String memberId = AuthUtil.getMemberId();
         mav.addObject("memberId", memberId);
-        //TODO: api와 연결 후 실행 시 주석 해제
+
         List<Project> projects = projectService.getProjects(memberId);
+
         mav.addObject("projects",projects);
 
         return mav;
@@ -47,19 +51,21 @@ public class ProjectController {
     // 프로젝트 생성 포스트 부분
     @PostMapping("/project/create")
     public String saveProject(@ModelAttribute ProjectCreateRequest projectCreateRequest, Model model) {
-        projectCreateRequest.setMemberId(MemberIdUtil.getMemberId());
+        projectCreateRequest.setMemberId(AuthUtil.getMemberId());
         //TODO: api와 연결 후 실행 시 주석 해제
         projectService.createProject(projectCreateRequest);
-        return "redirect:/"+projectCreateRequest.getMemberId()+"/project";
+        return "redirect:/project";
     }
 
     // 프로젝트 상세보기
     @GetMapping("/project/{projectId}")
-    public ModelAndView viewProjectDetail(@PathVariable String projectId) {
+    public ModelAndView viewProjectDetail(@PathVariable Long projectId) {
         ModelAndView mav = new ModelAndView("projectDetail");
         //TODO: api와 연결 후 실행 시 주석 해제
-//        mav.addObject("project", projectService.getProject(projectId));
-        mav.addObject("project", new ProjectDetailResponse());
+        mav.addObject("project", projectService.getProjectDetail(projectId));
+        mav.addObject("taskList", taskService.getTasks(projectId));
+        mav.addObject("milestoneList", milestoneService.getMilestones(projectId));
+        mav.addObject("tagList",tagService.getTags(projectId));
         mav.addObject("memberList");
         return mav;
     }
@@ -76,7 +82,7 @@ public class ProjectController {
                                    @ModelAttribute ProjectMemberAddRequest projectMemberAddRequest) {
 
         // 데이터를 주고 받은 후 넘겨 받아야 함.
-//        projectService.addProjectMember(projectId,projectMemberAddRequest);
+        projectService.addProjectMember(projectId,projectMemberAddRequest);
         return "redirect:/project/"+projectId;
     }
 

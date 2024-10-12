@@ -1,6 +1,7 @@
 package com.nhnacademy.mini_dooray.gateway.server.account.handler;
 
 
+import com.nhnacademy.mini_dooray.gateway.common.util.CookieUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,15 +26,14 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        String sessionId = null;
-        Cookie[] cookies = request.getCookies();
-        for(Cookie cookie : cookies) {
-            if(cookie.getName().equals("SESSION")) {
-                sessionId = cookie.getValue();
-            }
-        }
-        if(sessionId != null) {
-            sessionRedisTemplate.opsForHash().delete(HASH_NAME, sessionId);
+        Cookie cookie = CookieUtils.getCookie(request, "SESSION");
+
+        if (cookie != null) {
+            sessionRedisTemplate.opsForHash().delete(HASH_NAME, cookie.getValue());
+            cookie.setMaxAge(0);
+            cookie.setValue(null);
+            cookie.setPath("/");
+            response.addCookie(cookie);
         }
         redirectStrategy.sendRedirect(request, response, "/");
     }
