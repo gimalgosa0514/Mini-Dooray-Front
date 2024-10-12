@@ -1,7 +1,7 @@
 package com.nhnacademy.mini_dooray.gateway.config;
 
-import com.nhnacademy.mini_dooray.gateway.account.handler.CustomLoginSuccessHandler;
-import com.nhnacademy.mini_dooray.gateway.account.handler.CustomLogoutSuccessHandler;
+import com.nhnacademy.mini_dooray.gateway.server.account.handler.CustomLoginSuccessHandler;
+import com.nhnacademy.mini_dooray.gateway.server.account.handler.CustomLogoutSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
