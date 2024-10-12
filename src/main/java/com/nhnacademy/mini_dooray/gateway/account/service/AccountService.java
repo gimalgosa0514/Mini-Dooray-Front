@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @RequiredArgsConstructor
+//TODO 비밀번호 암호화
 public class AccountService {
 
     private final String ACCOUNT_API_URL = "http://localhost:8081";
@@ -35,7 +36,7 @@ public class AccountService {
             return response.getBody();
         }
 
-        throw new MemberRegisterFailedException(response.getBody().getMessage());
+        throw new MemberRegisterFailedException("member register failed");
     }
 
     public MemberLoginResponse doLogin(String userId){
