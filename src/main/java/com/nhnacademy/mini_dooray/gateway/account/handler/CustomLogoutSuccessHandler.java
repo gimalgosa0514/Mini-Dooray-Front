@@ -1,4 +1,4 @@
-package com.nhnacademy.mini_dooray.gateway.handler;
+package com.nhnacademy.mini_dooray.gateway.account.handler;
 
 
 import jakarta.servlet.ServletException;

@@ -24,7 +24,7 @@ public class AccountService {
 
     public MessageDto register(MemberRegistrationRequest request) {
 
-        String uri = "/register";
+        String uri = "/member";
 
         request.setPassword(passwordEncoder.encode(request.getPassword()));
         ResponseEntity<MessageDto> response =  adapter.post(ACCOUNT_API_URL + uri, request);
@@ -39,7 +39,7 @@ public class AccountService {
     public MemberLoginResponse doLogin(String userId){
         String uri = "/member/" + userId;
 
-        ResponseEntity<MemberLoginResponse> response = adapter.get(uri, MemberLoginResponse.class);
+        ResponseEntity<MemberLoginResponse> response = adapter.get(ACCOUNT_API_URL + uri, MemberLoginResponse.class);
 
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();

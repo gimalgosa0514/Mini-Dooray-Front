@@ -2,6 +2,8 @@ package com.nhnacademy.mini_dooray.gateway.account.service;
 
 import com.nhnacademy.mini_dooray.gateway.account.domain.MemberLoginResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 @RequiredArgsConstructor
@@ -26,6 +29,6 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found");
         }
 
-        return new User(memberLoginResponse.getId(), memberLoginResponse.getPassword(), new ArrayList<>());
+        return new User(memberLoginResponse.getId(), memberLoginResponse.getPassword(), Arrays.asList(new SimpleGrantedAuthority("ROLE_MEMBER")));
     }
 }
