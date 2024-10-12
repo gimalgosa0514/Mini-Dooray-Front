@@ -54,7 +54,6 @@ public class TaskService {
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         }
-
         throw new TaskNotRegisterException("task not registered");
     }
 
