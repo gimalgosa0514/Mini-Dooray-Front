@@ -43,6 +43,7 @@ public class SecurityConfig{
                         .deleteCookies("SESSION")
                         .permitAll()
                 )
+
                 .csrf(csrf -> csrf.disable()
                 );
 

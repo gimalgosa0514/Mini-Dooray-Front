@@ -22,6 +22,6 @@ public class TaskTagController {
     @DeleteMapping("/project/{projectId}/task/{taskId}/tag/{tagId}")
     public String detachTag(@PathVariable Long projectId, @PathVariable Long taskId, @PathVariable Long tagId) {
         taskTagService.detachTag(projectId, taskId, tagId);
-
+        return "redirect:/project/" + projectId + "/task/" + taskId;
     }
 }
