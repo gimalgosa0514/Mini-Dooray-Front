@@ -2,6 +2,7 @@ package com.nhnacademy.mini_dooray.gateway.project.controller;
 
 import com.nhnacademy.mini_dooray.gateway.project.adapter.ProjectAdapter;
 import com.nhnacademy.mini_dooray.gateway.project.domain.ProjectCreateRequest;
+import com.nhnacademy.mini_dooray.gateway.project.domain.ProjectDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,9 +42,9 @@ public class ProjectController {
     @GetMapping("/project/{projectId}")
     public ModelAndView viewProjectDetail(@PathVariable String projectId) {
         ModelAndView mav = new ModelAndView("projectDetail");
-        mav.addObject("projectId", projectId);
         //TODO: api와 연결 후 실행 시 주석 해제
 //        mav.addObject("project", projectAdapter.getProject(projectId));
+        mav.addObject("project", new ProjectDetailResponse());
         return mav;
     }
 
