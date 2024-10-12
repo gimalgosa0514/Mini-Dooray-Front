@@ -28,9 +28,9 @@ public class RegisterController {
         }
 
         accountService.register(request);
-
         return "redirect:/login";
     }
+
 
     @ExceptionHandler(MemberRegisterFailedException.class)
     public String handleMemberRegisterException(MemberRegisterFailedException ex, Model model) {
