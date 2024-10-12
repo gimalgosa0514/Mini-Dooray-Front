@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequiredArgsConstructor
 public class TaskTagController {
-
+    
     private final TaskTagService taskTagService;
 
     @PostMapping("/project/{projectId}/task/{taskId}/tag")

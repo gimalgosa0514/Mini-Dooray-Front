@@ -1,5 +1,7 @@
 package com.nhnacademy.mini_dooray.gateway.project.controller;
 
+import com.nhnacademy.mini_dooray.gateway.account.service.AccountService;
+import com.nhnacademy.mini_dooray.gateway.milestone.service.MilestoneService;
 import com.nhnacademy.mini_dooray.gateway.project.domain.ProjectCreateRequest;
 import com.nhnacademy.mini_dooray.gateway.project.domain.ProjectDetailResponse;
 import com.nhnacademy.mini_dooray.gateway.project.domain.ProjectMemberAddRequest;
@@ -15,7 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProjectController {
 
     private final ProjectService projectService;
-    
+    private final AccountService accountService;
+    private final MilestoneService milestoneService;
 
 
     // 멤버가 속한 프로젝트 목록
@@ -24,7 +27,7 @@ public class ProjectController {
         ModelAndView mav = new ModelAndView("project");
         mav.addObject("memberId", memberId);
         //TODO: api와 연결 후 실행 시 주석 해제
-        //mav.addObject("projects",projectAdapter.projectList());
+        //mav.addObject("projects",projectService.projectList());
 
         return mav;
     }
@@ -50,8 +53,9 @@ public class ProjectController {
     public ModelAndView viewProjectDetail(@PathVariable String projectId) {
         ModelAndView mav = new ModelAndView("projectDetail");
         //TODO: api와 연결 후 실행 시 주석 해제
-//        mav.addObject("project", projectAdapter.getProject(projectId));
+//        mav.addObject("project", projectService.getProject(projectId));
         mav.addObject("project", new ProjectDetailResponse());
+        mav.addObject("memberList");
         return mav;
     }
 
