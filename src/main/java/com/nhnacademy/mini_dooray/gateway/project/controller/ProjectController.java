@@ -15,6 +15,9 @@ public class ProjectController {
 
     private final ProjectAdapter projectAdapter;
 
+
+
+    // 멤버가 속한 프로젝트 목록
     @GetMapping("/{memberId}/project")
     public ModelAndView viewProject(@PathVariable String memberId) {
         ModelAndView mav = new ModelAndView("project");
@@ -25,12 +28,14 @@ public class ProjectController {
         return mav;
     }
 
+    // 프로젝트 생성하는 부분
     @GetMapping("/project/create")
     public String viewCreateProject(@RequestParam(required = false) String memberId, Model model) {
         model.addAttribute("memberId", memberId);
         return "projectCreate";
     }
 
+    // 프로젝트 생성 포스트 부분
     @PostMapping("/project/create")
     public String saveProject(@ModelAttribute ProjectCreateRequest projectCreateRequest, Model model) {
 
@@ -39,6 +44,7 @@ public class ProjectController {
         return "redirect:/"+projectCreateRequest.getMemberId()+"/project";
     }
 
+    // 프로젝트 상세보기
     @GetMapping("/project/{projectId}")
     public ModelAndView viewProjectDetail(@PathVariable String projectId) {
         ModelAndView mav = new ModelAndView("projectDetail");
@@ -47,6 +53,12 @@ public class ProjectController {
         mav.addObject("project", new ProjectDetailResponse());
         return mav;
     }
+
+//    @GetMapping("/project/{projectId}/member")
+//    public ModelAndView viewProjectMember(@PathVariable String projectId) {
+//        ModelAndView mav = new ModelAndView("projectMember");
+//
+//    }
 
 
 }
