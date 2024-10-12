@@ -1,8 +1,9 @@
 package com.nhnacademy.mini_dooray.gateway.project.controller;
 
-import com.nhnacademy.mini_dooray.gateway.project.adapter.ProjectAdapter;
 import com.nhnacademy.mini_dooray.gateway.project.domain.ProjectCreateRequest;
 import com.nhnacademy.mini_dooray.gateway.project.domain.ProjectDetailResponse;
+import com.nhnacademy.mini_dooray.gateway.project.domain.ProjectMemberAddRequest;
+import com.nhnacademy.mini_dooray.gateway.project.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 public class ProjectController {
 
-    private final ProjectAdapter projectAdapter;
+    private final ProjectService projectService;
 
 
 
@@ -63,9 +64,10 @@ public class ProjectController {
 
     @PostMapping("project/{projectId}/member")
     public String addProjectMember(@PathVariable String projectId,
-                                         @RequestParam String memberId) {
+                                   @ModelAttribute ProjectMemberAddRequest projectMemberAddRequest) {
 
         // 데이터를 주고 받은 후 넘겨 받아야 함.
+//        projectService.addProjectMember(projectId,projectMemberAddRequest);
         return "redirect:/project/"+projectId;
     }
 
