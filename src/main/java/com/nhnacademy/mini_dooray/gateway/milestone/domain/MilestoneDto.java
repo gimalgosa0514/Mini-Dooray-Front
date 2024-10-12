@@ -9,6 +9,6 @@ public class MilestoneDto {
 
     private String milestoneName;
     private String milestoneStartline;
-    private String milestoneEndline;
+    private String milestoneDeadline;
 
 }

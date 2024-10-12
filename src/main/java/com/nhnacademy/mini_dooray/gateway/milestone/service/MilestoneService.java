@@ -2,7 +2,9 @@ package com.nhnacademy.mini_dooray.gateway.milestone.service;
 
 import com.nhnacademy.mini_dooray.gateway.common.adapter.Adapter;
 import com.nhnacademy.mini_dooray.gateway.common.dto.MessageDto;
+import com.nhnacademy.mini_dooray.gateway.milestone.domain.MilestoneAttachRequest;
 import com.nhnacademy.mini_dooray.gateway.milestone.domain.MilestoneDto;
+import com.nhnacademy.mini_dooray.gateway.milestone.exception.MilestoneAttachFailedException;
 import com.nhnacademy.mini_dooray.gateway.milestone.exception.MilestoneDeleteFailedException;
 import com.nhnacademy.mini_dooray.gateway.milestone.exception.MilestoneNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -37,11 +39,17 @@ public class MilestoneService {
         throw new MilestoneDeleteFailedException("Milestone can't delete!");
     }
 
-    public MessageDto updateMilestone(String projectId,String taskId) {
+    public MessageDto attachMilestone(String projectId, String taskId, MilestoneAttachRequest request) {
+
         String url = URL + "/project/" + projectId + "/task/" + taskId + "/milestone";
 
-        ResponseEntity<MessageDto> response = adapter.put(url, MessageDto.class);
-        return null;
+        ResponseEntity<MessageDto> response = adapter.post(url, request);
+
+        if(response.getStatusCode().is2xxSuccessful()) {
+            return response.getBody();
+        }
+        throw new MilestoneAttachFailedException("can't attach");
     }
+
 
 }

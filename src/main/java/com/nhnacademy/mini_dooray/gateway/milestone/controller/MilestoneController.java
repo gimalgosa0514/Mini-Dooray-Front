@@ -1,13 +1,11 @@
 package com.nhnacademy.mini_dooray.gateway.milestone.controller;
 
+import com.nhnacademy.mini_dooray.gateway.milestone.domain.MilestoneAttachRequest;
 import com.nhnacademy.mini_dooray.gateway.milestone.domain.MilestoneDto;
 import com.nhnacademy.mini_dooray.gateway.milestone.service.MilestoneService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -28,5 +26,12 @@ public class MilestoneController {
 
         milestoneService.deleteMilestone(projectId,taskId);
         return "redirect:/project/"+projectId+"/task/"+taskId;
+    }
+
+    @PostMapping("/project/{projectId}/task/{taskId}/milestone")
+    public String attachMilestone(@PathVariable String projectId, @PathVariable String taskId, @ModelAttribute MilestoneAttachRequest milestoneAttachRequest) {
+
+        milestoneService.attachMilestone(projectId,taskId,milestoneAttachRequest);
+        return "/redirect:/project/"+projectId+"/task/"+taskId;
     }
 }
