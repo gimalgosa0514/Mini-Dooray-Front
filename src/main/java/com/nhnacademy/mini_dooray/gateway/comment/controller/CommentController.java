@@ -34,8 +34,7 @@ public class CommentController {
     @DeleteMapping("/project/{projectId}/task/{taskId}/comment/{commentId}")
     public String deleteComment(@PathVariable Long projectId
             , @PathVariable Long taskId
-            , @PathVariable Long commentId
-            , Model model) {
+            , @PathVariable Long commentId) {
 
         commentService.deleteComment(projectId, taskId, commentId);
         return "redirect:/project/" + projectId + "/task/" + taskId;
@@ -43,8 +42,7 @@ public class CommentController {
     @PostMapping("/project/{projectId}/task/{taskId}/comment")
     public String addComment(@PathVariable Long projectId
             , @PathVariable Long taskId
-            , @RequestBody CommentRegistrationRequest request
-            , Model model) {
+            , @RequestBody CommentRegistrationRequest request) {
 
         commentService.createComment(projectId, taskId, request);
         return "redirect:/project/" + projectId + "/task/" + taskId;
