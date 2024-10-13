@@ -26,6 +26,7 @@ public class ProjectController {
     private final TaskService taskService;
     private final MilestoneService milestoneService;
     private final TagService tagService;
+    private final AccountService accountService;
 
     // 멤버가 속한 프로젝트 목록
     @GetMapping("/project")
@@ -71,7 +72,7 @@ public class ProjectController {
     }
 
     @GetMapping("/project/{projectId}/member")
-    public ModelAndView viewProjectMember(@PathVariable String projectId) {
+    public ModelAndView viewProjectMember(@PathVariable Long projectId) {
         ModelAndView mav = new ModelAndView("projectAddMember");
         mav.addObject("projectId", projectId);
         return mav;
@@ -82,6 +83,8 @@ public class ProjectController {
                                    @ModelAttribute ProjectMemberAddRequest projectMemberAddRequest) {
 
         // 데이터를 주고 받은 후 넘겨 받아야 함.
+        accountService.getMember(projectMemberAddRequest.getMemberId());
+
         projectService.addProjectMember(projectId,projectMemberAddRequest);
         return "redirect:/project/"+projectId;
     }
