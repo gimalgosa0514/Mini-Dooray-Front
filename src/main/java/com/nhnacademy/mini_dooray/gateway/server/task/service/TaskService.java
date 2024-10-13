@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,44 +29,69 @@ public class TaskService {
     public TaskResponse getTask(Long projectId, Long taskId) {
         String uri = "/project/"+projectId+"/tasks/"+taskId;
 
-        ResponseEntity<TaskResponse> response = adapter.get(URL + uri, TaskResponse.class);
+        try {
+            ResponseEntity<TaskResponse> response = adapter.get(URL + uri, TaskResponse.class);
 
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody();
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return response.getBody();
+            }
+
         }
 
+        catch (HttpClientErrorException | HttpServerErrorException e) {
+            throw new TaskNotFoundException("task not found");
+        }
         throw new TaskNotFoundException("task not found");
 
     }
     public List<TaskResponse> getTasks(Long projectId) {
         String uri = "/project/"+projectId+"/tasks";
 
-        ResponseEntity<List<TaskResponse>> response = adapter.getList(URL + uri, new ParameterizedTypeReference<List<TaskResponse>>() {});
+        try {
+            ResponseEntity<List<TaskResponse>> response = adapter.getList(URL + uri, new ParameterizedTypeReference<List<TaskResponse>>() {});
 
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody();
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return response.getBody();
+            }
+            return new ArrayList<>();
+        }
+        catch (HttpClientErrorException | HttpServerErrorException e) {
+            return new ArrayList<>();
         }
 
-        return new ArrayList<>();
     }
     public MessageDto createTask(Long projectId, TaskRegistrationRequest taskRegistrationRequest) {
         String uri = "/project/" + projectId + "/task";
 
-        ResponseEntity<MessageDto> response = adapter.post(uri, taskRegistrationRequest);
+        try {
+            ResponseEntity<MessageDto> response = adapter.post(uri, taskRegistrationRequest);
 
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody();
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return response.getBody();
+            }
         }
+        catch ( HttpClientErrorException | HttpServerErrorException e) {
+
+            throw new TaskNotRegisterException("task not registered");
+
+        }
+
         throw new TaskNotRegisterException("task not registered");
     }
 
 
     public MessageDto updateTask(Long projectId, Long taskId, TaskUpdateRequest taskUpdateRequest) {
         String uri = "/project/" + projectId + "/task" + taskId;
-        ResponseEntity<MessageDto> response = adapter.put(URL + uri, taskUpdateRequest);
 
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody();
+        try {
+            ResponseEntity<MessageDto> response = adapter.put(URL + uri, taskUpdateRequest);
+
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return response.getBody();
+            }
+        }
+        catch (HttpClientErrorException | HttpServerErrorException e) {
+            throw new TaskNotUpdateException("task updated error");
         }
 
         throw new TaskNotUpdateException("task updated error");
@@ -73,10 +100,15 @@ public class TaskService {
     public MessageDto deleteTask(Long projectId, Long taskId) {
         String uri = "/project/" + projectId + "/task/" + taskId;
 
-        ResponseEntity<MessageDto> response = adapter.delete(URL + uri);
+        try {
+            ResponseEntity<MessageDto> response = adapter.delete(URL + uri);
 
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody();
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return response.getBody();
+            }
+        }
+        catch ( HttpClientErrorException | HttpServerErrorException e) {
+            throw new TaskNotFoundException("task not found");
         }
 
         throw new TaskNotFoundException("task not found");
