@@ -76,7 +76,7 @@ public class ProjectService {
 
     }
 
-    public MessageDto addProjectMember(String projectId, ProjectMemberAddRequest projectMemberAddRequest) {
+    public MessageDto addProjectMember(Long projectId, ProjectMemberAddRequest projectMemberAddRequest) {
         String url = URL+"/project/"+projectId+"/member";
 
         try{

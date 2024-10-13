@@ -1,5 +1,6 @@
 package com.nhnacademy.mini_dooray.gateway.server.comment.controller;
 
+import com.nhnacademy.mini_dooray.gateway.common.util.AuthUtil;
 import com.nhnacademy.mini_dooray.gateway.server.comment.domain.CommentRegistrationRequest;
 import com.nhnacademy.mini_dooray.gateway.server.comment.domain.CommentUpdateRequest;
 import com.nhnacademy.mini_dooray.gateway.server.comment.service.CommentService;
@@ -25,7 +26,7 @@ public class CommentController {
     public String updateComment(@PathVariable Long projectId
             , @PathVariable Long taskId
             , @PathVariable Long commentId
-            , @RequestBody CommentUpdateRequest request) {
+            , @ModelAttribute CommentUpdateRequest request) {
         commentService.updateComment(projectId, taskId, commentId, request);
 
         return "redirect:/project/" + projectId + "/task/" + taskId;
@@ -42,8 +43,10 @@ public class CommentController {
     @PostMapping("/project/{projectId}/task/{taskId}/comment")
     public String addComment(@PathVariable Long projectId
             , @PathVariable Long taskId
-            , @RequestBody CommentRegistrationRequest request) {
+            , @ModelAttribute CommentRegistrationRequest request) {
 
+        request.setMemberId(AuthUtil.getMemberId());
+        request.setTaskId(taskId);
         commentService.createComment(projectId, taskId, request);
         return "redirect:/project/" + projectId + "/task/" + taskId;
     }

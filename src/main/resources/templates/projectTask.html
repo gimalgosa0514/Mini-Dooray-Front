@@ -10,18 +10,46 @@
 <div class="container mt-5">
     <h1 class="mb-4">업무 상세보기</h1>
 
+    <!-- 업무 게시글 카드 -->
     <div class="card">
         <div class="card-body">
             <h3 class="card-title">업무 제목: <span th:text="${task.taskTitle}">업무 제목</span></h3>
 
-            <p><strong>업무 ID:</strong> <span th:text="${task.taskId}">1</span></p>
-            <p><strong>담당자 ID:</strong> <span th:text="${task.memberId}">담당자 아이디</span></p>
+            <p><strong>작성자 ID:</strong> <span th:text="${task.memberId}">작성자 아이디</span></p>
             <p><strong>업무 내용:</strong> <span th:text="${task.taskContent}">업무 내용</span></p>
 
         </div>
     </div>
+
     <a class="btn btn-secondary mt-4" th:href="@{/project/{projectId}(projectId=${projectId})}">목록으로 돌아가기</a>
 
+    <!-- 댓글 섹션 -->
+    <div class="mt-5">
+        <h3>댓글</h3>
+
+        <!-- 댓글 리스트 -->
+        <ul class="list-group mb-4" th:each="comment : ${comments}">
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <span class="font-weight-bold" th:text="${comment.memberId}">작성자 아이디</span>
+                </div>
+                <p th:text="${comment.commentContent}">댓글 내용</p>
+            </li>
+        </ul>
+
+        <!-- 댓글 작성 폼 -->
+        <form th:action="@{/project/{projectId}/task/{taskId}/comment(projectId=${projectId},taskId=${taskId})}" method="post">
+            <input type="hidden" th:value="${task.taskId}" name="taskId">
+
+            <div class="form-group">
+                <label for="commentContent">댓글 내용</label>
+                <textarea class="form-control" id="commentContent" name="commentContent" rows="3" placeholder="댓글을 입력하세요"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">댓글 등록</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

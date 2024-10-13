@@ -11,5 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CommentRegistrationRequest {
     private String memberId;
+    private Long taskId;
     private String commentContent;
 }

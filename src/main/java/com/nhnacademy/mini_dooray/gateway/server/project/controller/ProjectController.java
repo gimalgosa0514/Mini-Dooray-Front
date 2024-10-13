@@ -1,5 +1,6 @@
 package com.nhnacademy.mini_dooray.gateway.server.project.controller;
 
+import com.nhnacademy.mini_dooray.gateway.server.account.exception.UnauthenticatedUserException;
 import com.nhnacademy.mini_dooray.gateway.server.account.service.AccountService;
 import com.nhnacademy.mini_dooray.gateway.server.milestone.service.MilestoneService;
 import com.nhnacademy.mini_dooray.gateway.server.project.domain.Project;
@@ -63,25 +64,38 @@ public class ProjectController {
     public ModelAndView viewProjectDetail(@PathVariable Long projectId) {
         ModelAndView mav = new ModelAndView("projectDetail");
         //TODO: api와 연결 후 실행 시 주석 해제
-        mav.addObject("project", projectService.getProjectDetail(projectId));
+        ProjectDetailResponse projectDetailResponse = projectService.getProjectDetail(projectId);
+        boolean isAdmin = AuthUtil.isAdmin(projectDetailResponse.getProjectManagerId());
+
+        mav.addObject("project", projectDetailResponse);
         mav.addObject("taskList", taskService.getTasks(projectId));
         mav.addObject("milestoneList", milestoneService.getMilestones(projectId));
         mav.addObject("tagList",tagService.getTags(projectId));
         mav.addObject("memberList",projectService.getProjectMembers(projectId));
+        mav.addObject("isAdmin",isAdmin);
         return mav;
     }
 
     @GetMapping("/project/{projectId}/member")
     public ModelAndView viewProjectMember(@PathVariable Long projectId) {
+        Boolean isAdmin = AuthUtil.isAdmin(projectService.getProjectDetail(projectId).getProjectManagerId());
+        if (!isAdmin) {
+            throw new UnauthenticatedUserException("Not admin");
+        }
+
         ModelAndView mav = new ModelAndView("projectAddMember");
         mav.addObject("projectId", projectId);
         return mav;
     }
 
     @PostMapping("project/{projectId}/member")
-    public String addProjectMember(@PathVariable String projectId,
+    public String addProjectMember(@PathVariable Long projectId,
                                    @ModelAttribute ProjectMemberAddRequest projectMemberAddRequest) {
 
+        Boolean isAdmin = AuthUtil.isAdmin(projectService.getProjectDetail(projectId).getProjectManagerId());
+        if (!isAdmin) {
+            throw new UnauthenticatedUserException("Not admin");
+        }
         // 데이터를 주고 받은 후 넘겨 받아야 함.
         accountService.getMember(projectMemberAddRequest.getMemberId());
 

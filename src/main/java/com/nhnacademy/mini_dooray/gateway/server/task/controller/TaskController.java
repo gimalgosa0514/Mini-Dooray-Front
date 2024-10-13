@@ -1,6 +1,8 @@
 package com.nhnacademy.mini_dooray.gateway.server.task.controller;
 
 import com.nhnacademy.mini_dooray.gateway.common.util.AuthUtil;
+import com.nhnacademy.mini_dooray.gateway.server.comment.domain.CommentResponse;
+import com.nhnacademy.mini_dooray.gateway.server.comment.service.CommentService;
 import com.nhnacademy.mini_dooray.gateway.server.task.domain.TaskRegistrationRequest;
 import com.nhnacademy.mini_dooray.gateway.server.task.domain.TaskResponse;
 import com.nhnacademy.mini_dooray.gateway.server.task.domain.TaskUpdateRequest;
@@ -17,6 +19,7 @@ import java.util.List;
 public class TaskController {
 
     private final TaskService taskService;
+    private final CommentService commentService;
 
     @GetMapping("/project/{projectId}/task")
     public String getTask(@PathVariable Long projectId, Model model) {
@@ -29,6 +32,8 @@ public class TaskController {
     @GetMapping("/project/{projectId}/task/{taskId}")
     public String getTask(@PathVariable Long projectId, @PathVariable Long taskId, Model model) {
         TaskResponse taskResponse = taskService.getTask(projectId, taskId);
+        List<CommentResponse> comments = commentService.getComments(projectId, taskId);
+        model.addAttribute("comments", comments);
         model.addAttribute("task", taskResponse);
         model.addAttribute("projectId", projectId);
         return "projectTask";

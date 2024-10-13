@@ -23,7 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentService {
     private final Adapter adapter;
-    private final String API_COMMENT_URL = "http://localhost:8082";
+    private final String API_COMMENT_URL = "http://localhost:8082/api";
 
     public List<CommentResponse> getComments(Long projectId, Long taskId) {
         String uri = "/project/" + projectId + "/task/" + taskId + "/comment";

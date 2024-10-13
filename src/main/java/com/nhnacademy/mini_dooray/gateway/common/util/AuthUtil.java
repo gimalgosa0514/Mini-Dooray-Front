@@ -29,4 +29,8 @@ public class AuthUtil {
 
         return null;
     }
+
+    public static boolean isAdmin(String projectMangerId){
+        return getMemberId().equals(projectMangerId);
+    }
 }
