@@ -2,10 +2,7 @@ package com.nhnacademy.mini_dooray.gateway.server.project.service;
 
 import com.nhnacademy.mini_dooray.gateway.common.adapter.Adapter;
 import com.nhnacademy.mini_dooray.gateway.common.dto.MessageDto;
-import com.nhnacademy.mini_dooray.gateway.server.project.domain.Project;
-import com.nhnacademy.mini_dooray.gateway.server.project.domain.ProjectCreateRequest;
-import com.nhnacademy.mini_dooray.gateway.server.project.domain.ProjectDetailResponse;
-import com.nhnacademy.mini_dooray.gateway.server.project.domain.ProjectMemberAddRequest;
+import com.nhnacademy.mini_dooray.gateway.server.project.domain.*;
 import com.nhnacademy.mini_dooray.gateway.server.project.exception.ProjectMemberNotRegisterException;
 import com.nhnacademy.mini_dooray.gateway.server.project.exception.ProjectNotFoundException;
 import com.nhnacademy.mini_dooray.gateway.server.project.exception.ProjectNotRegisterException;
@@ -95,5 +92,18 @@ public class ProjectService {
         }
     }
 
-    
+    public List<ProjectMemberResponse> getProjectMembers(Long projectId) {
+        String url = URL+"/project/"+projectId;
+
+        try{
+            ResponseEntity<List<ProjectMemberResponse>> response = adapter.getList(url, new ParameterizedTypeReference<List<ProjectMemberResponse>>() {});
+            if(response.getStatusCode().is2xxSuccessful()) {
+                return response.getBody();
+            }
+            return new ArrayList<>();
+        }
+        catch (HttpClientErrorException | HttpServerErrorException e) {
+            return new ArrayList<>();
+        }
+    }
 }

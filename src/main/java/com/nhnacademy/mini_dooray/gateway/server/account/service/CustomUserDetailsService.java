@@ -14,14 +14,13 @@ import java.util.Objects;
 
 @RequiredArgsConstructor
 @Component
-//TODO : 추후 확인 필요
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final AccountService accountService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        MemberLoginResponse memberLoginResponse = accountService.doLogin(username);
+        MemberLoginResponse memberLoginResponse = accountService.getMember(username);
 
         if (Objects.isNull(memberLoginResponse)) {
             throw new UsernameNotFoundException("User not found");

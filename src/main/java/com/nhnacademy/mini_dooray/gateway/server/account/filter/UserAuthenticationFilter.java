@@ -17,7 +17,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -55,7 +54,7 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
             String memberId = (String) o;
             MemberLoginResponse member = null;
 
-            member = accountService.doLogin(memberId);
+            member = accountService.getMember(memberId);
 
             if (o != null) {
                 UserDetails user = new User(member.getId(), member.getPassword(), Arrays.asList(new SimpleGrantedAuthority("ROLE_MEMBER")));

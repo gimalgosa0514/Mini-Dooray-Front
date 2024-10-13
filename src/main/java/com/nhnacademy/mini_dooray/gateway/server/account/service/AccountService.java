@@ -2,7 +2,7 @@ package com.nhnacademy.mini_dooray.gateway.server.account.service;
 
 import com.nhnacademy.mini_dooray.gateway.server.account.domain.MemberRegistrationRequest;
 import com.nhnacademy.mini_dooray.gateway.server.account.domain.MemberLoginResponse;
-import com.nhnacademy.mini_dooray.gateway.server.account.exception.LoginFailedException;
+import com.nhnacademy.mini_dooray.gateway.server.account.exception.MemberNotFoundException;
 import com.nhnacademy.mini_dooray.gateway.server.account.exception.MemberRegisterFailedException;
 import com.nhnacademy.mini_dooray.gateway.common.adapter.Adapter;
 import com.nhnacademy.mini_dooray.gateway.common.dto.MessageDto;
@@ -41,7 +41,7 @@ public class AccountService {
 
     }
 
-    public MemberLoginResponse doLogin(String userId){
+    public MemberLoginResponse getMember(String userId){
         String uri = "/member/" + userId;
 
         try{
@@ -51,10 +51,10 @@ public class AccountService {
                 return response.getBody();
             }
 
-            throw new LoginFailedException("login failed");
+            throw new MemberNotFoundException("member not found");
         }
         catch (HttpClientErrorException | HttpServerErrorException e){
-            throw new LoginFailedException("login failed");
+            throw new MemberNotFoundException("member not found");
         }
 
     }
