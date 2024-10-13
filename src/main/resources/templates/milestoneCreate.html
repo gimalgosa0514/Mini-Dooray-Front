@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>마일스톤 추가</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+  <h1 class="mb-4">마일스톤 추가</h1>
+
+  <form th:action="@{/project/{projectId}/milestone/add(projectId=${projectId})}" method="post">
+    <!-- 마일스톤 이름 -->
+    <div class="form-group">
+      <label for="milestoneName">마일스톤 이름</label>
+      <input type="text" class="form-control" id="milestoneName" name="milestoneName" placeholder="마일스톤 이름을 입력하세요" required>
+    </div>
+
+    <!-- 마일스톤 시작 날짜 -->
+    <div class="form-group">
+      <label for="milestoneStartline">마일스톤 시작 날짜</label>
+      <input type="date" class="form-control" id="milestoneStartline" name="milestoneStartline" required>
+    </div>
+
+    <!-- 마일스톤 마감 날짜 -->
+    <div class="form-group">
+      <label for="milestoneDeadline">마일스톤 마감 날짜</label>
+      <input type="date" class="form-control" id="milestoneDeadline" name="milestoneDeadline" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">마일스톤 추가</button>
+    <a class="btn btn-secondary" th:href="@{/project/{projectId}(projectId=${projectId})}">취소</a>
+  </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

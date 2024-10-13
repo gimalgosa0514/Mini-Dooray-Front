@@ -7,6 +7,7 @@ import com.nhnacademy.mini_dooray.gateway.server.milestone.domain.MilestoneDto;
 import com.nhnacademy.mini_dooray.gateway.server.milestone.domain.MilestoneListResponse;
 import com.nhnacademy.mini_dooray.gateway.server.milestone.exception.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.message.Message;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -121,6 +122,22 @@ public class MilestoneService {
             throw new MilestoneDeleteFailedException("can't delete");
         }
 
+    }
+
+
+    public MessageDto createMilestone(String projectId, MilestoneDto milestoneDto) {
+        String url = URL + "/project/"+projectId+"/milestone";
+
+        try {
+            ResponseEntity<MessageDto> response = adapter.post(url, milestoneDto);
+            if(response.getStatusCode().is2xxSuccessful()) {
+                return response.getBody();
+            }
+            throw new MilestoneCreateException("can't Create Milestone");
+        }
+        catch (HttpClientErrorException | HttpServerErrorException e) {
+            throw new MilestoneCreateException("can't Create Milestone");
+        }
     }
 
 }
