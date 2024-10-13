@@ -97,9 +97,6 @@
           <td th:text="${milestone.milestoneName}"></td>
           <td th:text="${milestone.milestoneStartline}"></td>
           <td th:text="${milestone.milestoneDeadline}"></td>
-          <td>
-            <a class="btn btn-primary mt-3" th:href="@{/project/{projectId}/milestone/delete(projectId=${projectId})}" >삭제</a>
-          </td>
         </tr>
         </tbody>
       </table>

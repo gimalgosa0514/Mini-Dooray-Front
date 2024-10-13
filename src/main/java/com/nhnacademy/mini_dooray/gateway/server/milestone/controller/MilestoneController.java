@@ -67,6 +67,7 @@ public class MilestoneController {
     @PostMapping("/project/{projectId}/milestone/add")
     public String createMilestone(@PathVariable String projectId, @ModelAttribute MilestoneDto milestoneDto) {
 
+        milestoneService.createMilestone(projectId,milestoneDto);
 
         return "redirect:/project/"+projectId;
     }
