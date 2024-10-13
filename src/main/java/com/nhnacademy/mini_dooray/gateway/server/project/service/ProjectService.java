@@ -36,6 +36,7 @@ public class ProjectService {
             return new ArrayList<>();
         }
         catch (HttpClientErrorException | HttpServerErrorException e) {
+            e.printStackTrace();
             return new ArrayList<>();
         }
     }
