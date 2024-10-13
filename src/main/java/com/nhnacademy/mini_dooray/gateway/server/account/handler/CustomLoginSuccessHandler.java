@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.UUID;
 
 
-@Component
 @RequiredArgsConstructor
 public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
@@ -30,7 +29,7 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         cookie.setMaxAge(259200);
         cookie.setPath("/");
         response.addCookie(cookie);
-        sessionRedisTemplate.opsForHash().put(HASH_NAME,"sessionId",sessionId);
+        sessionRedisTemplate.opsForHash().put(HASH_NAME,sessionId, request.getParameter("id"));
         super.onAuthenticationSuccess(request, response, authentication);
 
     }

@@ -6,7 +6,6 @@ import com.nhnacademy.mini_dooray.gateway.server.project.domain.Project;
 import com.nhnacademy.mini_dooray.gateway.server.project.domain.ProjectCreateRequest;
 import com.nhnacademy.mini_dooray.gateway.server.project.domain.ProjectDetailResponse;
 import com.nhnacademy.mini_dooray.gateway.server.project.domain.ProjectMemberAddRequest;
-import com.nhnacademy.mini_dooray.gateway.server.project.exception.ProjectGetException;
 import com.nhnacademy.mini_dooray.gateway.server.project.exception.ProjectMemberNotRegisterException;
 import com.nhnacademy.mini_dooray.gateway.server.project.exception.ProjectNotFoundException;
 import com.nhnacademy.mini_dooray.gateway.server.project.exception.ProjectNotRegisterException;
@@ -39,40 +38,60 @@ public class ProjectService {
 
             return new ArrayList<>();
         }
-       catch (HttpClientErrorException | HttpServerErrorException e) {
+        catch (HttpClientErrorException | HttpServerErrorException e) {
             return new ArrayList<>();
-       }
+        }
     }
 
     public ProjectDetailResponse getProjectDetail(Long projectId) {
         String url = URL+"/project/"+projectId;
+        try{
+            ResponseEntity<ProjectDetailResponse> response = adapter.get(url,ProjectDetailResponse.class);
 
-        ResponseEntity<ProjectDetailResponse> response = adapter.get(url,ProjectDetailResponse.class);
-        if(response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody();
+            if(response.getStatusCode().is2xxSuccessful()) {
+                return response.getBody();
+            }
+
         }
+        catch (HttpClientErrorException | HttpServerErrorException e) {
+            throw new ProjectNotFoundException("project not found");
+        }
+
         throw new ProjectNotFoundException("project not found");
     }
 
     public MessageDto createProject(ProjectCreateRequest request) {
         String url = URL+"/project";
 
-        ResponseEntity<MessageDto> response = adapter.post(url,request);
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody();
+        try{
+            ResponseEntity<MessageDto> response = adapter.post(url,request);
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return response.getBody();
+            }
+            throw new ProjectNotRegisterException("project not register");
+
         }
-        throw new ProjectNotRegisterException("project not register");
+        catch (HttpClientErrorException | HttpServerErrorException e) {
+            throw new ProjectNotRegisterException("project not register");
+
+        }
+
     }
 
     public MessageDto addProjectMember(String projectId, ProjectMemberAddRequest projectMemberAddRequest) {
         String url = URL+"/project/"+projectId+"member";
 
+        try{
+            ResponseEntity<MessageDto> response = adapter.post(url,projectMemberAddRequest);
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return response.getBody();
+            }
 
-        ResponseEntity<MessageDto> response = adapter.post(url,projectMemberAddRequest);
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody();
+            throw new ProjectMemberNotRegisterException("projectMember not register");
         }
+        catch (HttpClientErrorException | HttpServerErrorException e) {
+            throw new ProjectMemberNotRegisterException("projectMember not register");
 
-        throw new ProjectMemberNotRegisterException("projectMember not register");
+        }
     }
 }

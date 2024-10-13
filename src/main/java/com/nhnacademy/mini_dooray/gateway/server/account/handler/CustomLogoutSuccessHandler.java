@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @RequiredArgsConstructor
-@Component
 public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
     private final RedisTemplate<String,Object> sessionRedisTemplate;
