@@ -50,7 +50,7 @@
     <div class="tab-pane fade show active" id="members" role="tabpanel" aria-labelledby="members-tab">
       <h3>멤버 목록</h3>
       <ul class="list-group">
-        <li class="list-group-item" th:each="member : ${memberList}" th:text="${member}">멤버 아이디</li>
+        <li class="list-group-item" th:each="member : ${memberList}" th:text="${member.memberId}">멤버 아이디</li>
       </ul>
       <a class="btn btn-primary mt-3" th:href="@{/project/{projectId}/member(projectId=${projectId})}">멤버 추가</a>
     </div>

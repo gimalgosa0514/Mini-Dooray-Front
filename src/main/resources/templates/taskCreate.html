@@ -9,15 +9,10 @@
 <body>
 <div class="container mt-5">
   <h2>업무 등록</h2>
-  <form action="#" method="post">
+  <form th:action="@{/project/{projectId}/task/create(projectId=${projectId})}" method="post">
     <div class="form-group">
       <label for="taskTitle">업무 제목</label>
       <input type="text" class="form-control" id="taskTitle" name="taskTitle" placeholder="업무 제목 입력" required>
-    </div>
-
-    <div class="form-group">
-      <label for="memberId">담당 멤버 ID</label>
-      <input type="text" class="form-control" id="memberId" name="memberId" placeholder="담당 멤버 ID 입력" required>
     </div>
 
     <div class="form-group">

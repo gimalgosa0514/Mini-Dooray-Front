@@ -1,5 +1,6 @@
 package com.nhnacademy.mini_dooray.gateway.server.task.controller;
 
+import com.nhnacademy.mini_dooray.gateway.common.util.AuthUtil;
 import com.nhnacademy.mini_dooray.gateway.server.task.domain.TaskRegistrationRequest;
 import com.nhnacademy.mini_dooray.gateway.server.task.domain.TaskResponse;
 import com.nhnacademy.mini_dooray.gateway.server.task.domain.TaskUpdateRequest;
@@ -32,15 +33,23 @@ public class TaskController {
         return "projectTask";
     }
 
-    @PostMapping("/project/{projectId}/task")
-    public String postTask(@PathVariable Long projectId, @RequestBody TaskRegistrationRequest taskRegistrationRequest) {
+    @GetMapping("/project/{projectId}/task/create")
+    public String createTask(@PathVariable Long projectId, Model model) {
+        model.addAttribute("projectId", projectId);
+        return "taskCreate";
+    }
+
+    @PostMapping("/project/{projectId}/task/create")
+    public String postTask(@PathVariable Long projectId, @ModelAttribute TaskRegistrationRequest taskRegistrationRequest) {
+        String memberId= AuthUtil.getMemberId();
+        taskRegistrationRequest.setTaskContent(memberId);
         taskService.createTask(projectId, taskRegistrationRequest);
 
         return "redirect:/project/" + projectId + "/task";
     }
 
     @PutMapping("/project/{projectId}/task/{taskId}")
-    public String updateTask(@PathVariable Long projectId, @PathVariable Long taskId, @RequestBody TaskUpdateRequest request) {
+    public String updateTask(@PathVariable Long projectId, @PathVariable Long taskId, @ModelAttribute TaskUpdateRequest request) {
         taskService.updateTask(projectId, taskId, request);
         return "redirect:/project/" + projectId + "/task";
     }

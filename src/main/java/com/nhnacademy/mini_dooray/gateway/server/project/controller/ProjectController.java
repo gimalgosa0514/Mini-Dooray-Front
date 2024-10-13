@@ -67,7 +67,7 @@ public class ProjectController {
         mav.addObject("taskList", taskService.getTasks(projectId));
         mav.addObject("milestoneList", milestoneService.getMilestones(projectId));
         mav.addObject("tagList",tagService.getTags(projectId));
-        mav.addObject("memberList");
+        mav.addObject("memberList",projectService.getProjectMembers(projectId));
         return mav;
     }
 

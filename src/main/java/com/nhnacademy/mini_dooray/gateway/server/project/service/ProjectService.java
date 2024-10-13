@@ -93,7 +93,7 @@ public class ProjectService {
     }
 
     public List<ProjectMemberResponse> getProjectMembers(Long projectId) {
-        String url = URL+"/project/"+projectId;
+        String url = URL+"/project/"+projectId+"/member";
 
         try{
             ResponseEntity<List<ProjectMemberResponse>> response = adapter.getList(url, new ParameterizedTypeReference<List<ProjectMemberResponse>>() {});

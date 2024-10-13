@@ -27,7 +27,7 @@ public class TaskService {
     private final String URL = "http://localhost:8082/api";
 
     public TaskResponse getTask(Long projectId, Long taskId) {
-        String uri = "/project/"+projectId+"/tasks/"+taskId;
+        String uri = "/project/"+projectId+"/task/"+taskId;
 
         try {
             ResponseEntity<TaskResponse> response = adapter.get(URL + uri, TaskResponse.class);
@@ -45,7 +45,7 @@ public class TaskService {
 
     }
     public List<TaskResponse> getTasks(Long projectId) {
-        String uri = "/project/"+projectId+"/tasks";
+        String uri = "/project/"+projectId+"/task";
 
         try {
             ResponseEntity<List<TaskResponse>> response = adapter.getList(URL + uri, new ParameterizedTypeReference<List<TaskResponse>>() {});
@@ -64,7 +64,7 @@ public class TaskService {
         String uri = "/project/" + projectId + "/task";
 
         try {
-            ResponseEntity<MessageDto> response = adapter.post(uri, taskRegistrationRequest);
+            ResponseEntity<MessageDto> response = adapter.post(URL+uri, taskRegistrationRequest);
 
             if (response.getStatusCode().is2xxSuccessful()) {
                 return response.getBody();

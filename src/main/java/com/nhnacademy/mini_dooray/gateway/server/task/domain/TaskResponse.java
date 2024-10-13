@@ -1,19 +1,24 @@
 package com.nhnacademy.mini_dooray.gateway.server.task.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class TaskResponse {
-    private Long taskId;
+    private long taskId;
     private String taskTitle;
     private String memberId;
     private String taskContent;
     private String milestoneName;
-    private LocalDateTime milestoneStartLine;
-    private LocalDateTime milestoneEndLine;
-    private String tagName;
+    private LocalDateTime milestoneStartline;
+    private LocalDateTime milestoneDeadline;
+    private List<String> tagName;
 }
