@@ -4,11 +4,12 @@ import com.nhnacademy.mini_dooray.gateway.server.milestone.domain.MilestoneAttac
 import com.nhnacademy.mini_dooray.gateway.server.milestone.domain.MilestoneDto;
 import com.nhnacademy.mini_dooray.gateway.server.milestone.service.MilestoneService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class MilestoneController {
 
@@ -56,5 +57,18 @@ public class MilestoneController {
         return "redirect:/project/"+projectId;
     }
 
+    @GetMapping("/project/{projectId}/milestone/create")
+    public String createMilestone(@PathVariable String projectId, Model model) {
+        model.addAttribute("milestone", new MilestoneDto());
+        model.addAttribute("projectId", projectId);
+        return "milestoneCreate";
+    }
+
+    @PostMapping("/project/{projectId}/milestone/add")
+    public String createMilestone(@PathVariable String projectId, @ModelAttribute MilestoneDto milestoneDto) {
+
+
+        return "redirect:/project/"+projectId;
+    }
 
 }
