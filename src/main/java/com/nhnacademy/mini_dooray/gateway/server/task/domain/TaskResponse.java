@@ -1,5 +1,6 @@
 package com.nhnacademy.mini_dooray.gateway.server.task.domain;
 
+import com.nhnacademy.mini_dooray.gateway.server.tag.domain.TagResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,5 @@ public class TaskResponse {
     private String milestoneName;
     private LocalDateTime milestoneStartline;
     private LocalDateTime milestoneDeadline;
-    private List<String> tagName;
+    private List<TagResponse> tagName;
 }
