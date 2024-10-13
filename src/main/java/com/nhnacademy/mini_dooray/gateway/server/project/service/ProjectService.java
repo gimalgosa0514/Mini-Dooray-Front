@@ -107,4 +107,20 @@ public class ProjectService {
             return new ArrayList<>();
         }
     }
+
+    public MessageDto deleteProject(Long projectId) {
+        String url = URL+"/project/"+projectId;
+
+        try {
+            ResponseEntity<MessageDto> response = adapter.delete(url);
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return response.getBody();
+            }
+            throw new ProjectNotFoundException("project can't delete");
+
+        }
+        catch (HttpClientErrorException | HttpServerErrorException e) {
+            throw new ProjectNotFoundException("project can't delete");
+        }
+    }
 }

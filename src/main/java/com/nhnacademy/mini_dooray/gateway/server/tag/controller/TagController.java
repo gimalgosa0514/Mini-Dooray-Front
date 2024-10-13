@@ -14,6 +14,12 @@ public class TagController {
 
     private final TagService tagService;
 
+    @GetMapping("/project/{projectId}/tag/create")
+    public String createTag(Model model, @PathVariable Long projectId) {
+        model.addAttribute("projectId", projectId);
+        return "tagCreate";
+    }
+
     @GetMapping("/project/{projectId}/tag")
     public String getTagList(@PathVariable Long projectId, Model model) {
         model.addAttribute("tags", tagService.getTags(projectId));
@@ -21,13 +27,13 @@ public class TagController {
     }
 
     @PostMapping("/project/{projectId}/tag")
-    public String createTag(@PathVariable Long projectId, @RequestBody TagRegistrationRequest tagRequest) {
-        tagService.createTag(projectId, tagRequest);
+    public String createTag(@PathVariable Long projectId, @ModelAttribute TagRegistrationRequest tagRegistrationRequest) {
+        tagService.createTag(projectId, tagRegistrationRequest);
         return "redirect:/project/" + projectId;
     }
 
     @PutMapping("/project/{projectId}/tag/{tagId}")
-    public String updateTag(@PathVariable Long projectId, @PathVariable Long tagId, @RequestBody TagUpdateRequest tagRequest) {
+    public String updateTag(@PathVariable Long projectId, @PathVariable Long tagId, @ModelAttribute TagUpdateRequest tagRequest) {
         tagService.updateTag(projectId, tagId, tagRequest);
         return "redirect:/project/" + projectId;
     }

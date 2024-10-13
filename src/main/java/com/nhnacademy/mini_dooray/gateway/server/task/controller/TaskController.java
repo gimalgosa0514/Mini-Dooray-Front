@@ -30,6 +30,7 @@ public class TaskController {
     public String getTask(@PathVariable Long projectId, @PathVariable Long taskId, Model model) {
         TaskResponse taskResponse = taskService.getTask(projectId, taskId);
         model.addAttribute("task", taskResponse);
+        model.addAttribute("projectId", projectId);
         return "projectTask";
     }
 
@@ -42,23 +43,23 @@ public class TaskController {
     @PostMapping("/project/{projectId}/task/create")
     public String postTask(@PathVariable Long projectId, @ModelAttribute TaskRegistrationRequest taskRegistrationRequest) {
         String memberId= AuthUtil.getMemberId();
-        taskRegistrationRequest.setTaskContent(memberId);
+        taskRegistrationRequest.setMemberId(memberId);
         taskService.createTask(projectId, taskRegistrationRequest);
 
-        return "redirect:/project/" + projectId + "/task";
+        return "redirect:/project/" + projectId;
     }
 
     @PutMapping("/project/{projectId}/task/{taskId}")
     public String updateTask(@PathVariable Long projectId, @PathVariable Long taskId, @ModelAttribute TaskUpdateRequest request) {
         taskService.updateTask(projectId, taskId, request);
-        return "redirect:/project/" + projectId + "/task";
+        return "redirect:/project/" + projectId;
     }
 
-    @DeleteMapping("/project/{projectId}/task/{taskId}")
+    @GetMapping("/project/{projectId}/task/{taskId}/delete")
     public String deleteTask(@PathVariable Long projectId, @PathVariable Long taskId) {
         taskService.deleteTask(projectId, taskId);
 
-        return "redirect:/project/" + projectId + "/task";
+        return "redirect:/project/" + projectId;
     }
 
 
