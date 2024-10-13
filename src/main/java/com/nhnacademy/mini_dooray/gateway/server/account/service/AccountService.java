@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 
 @Service
 @RequiredArgsConstructor
@@ -23,26 +25,38 @@ public class AccountService {
 
         String uri = "/member";
 
-        request.setPassword(passwordEncoder.encode(request.getPassword()));
-        ResponseEntity<MessageDto> response =  adapter.post(ACCOUNT_API_URL + uri, request);
+        try{
+            request.setPassword(passwordEncoder.encode(request.getPassword()));
+            ResponseEntity<MessageDto> response =  adapter.post(ACCOUNT_API_URL + uri, request);
 
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody();
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return response.getBody();
+            }
+
+            throw new MemberRegisterFailedException("member register failed");
+        }
+        catch (HttpClientErrorException | HttpServerErrorException e){
+            throw new MemberRegisterFailedException("member register failed");
         }
 
-        throw new MemberRegisterFailedException("member register failed");
     }
 
     public MemberLoginResponse doLogin(String userId){
         String uri = "/member/" + userId;
 
-        ResponseEntity<MemberLoginResponse> response = adapter.get(ACCOUNT_API_URL + uri, MemberLoginResponse.class);
+        try{
+            ResponseEntity<MemberLoginResponse> response = adapter.get(ACCOUNT_API_URL + uri, MemberLoginResponse.class);
 
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return response.getBody();
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return response.getBody();
+            }
+
+            throw new LoginFailedException("login failed");
+        }
+        catch (HttpClientErrorException | HttpServerErrorException e){
+            throw new LoginFailedException("login failed");
         }
 
-        throw new LoginFailedException("login failed");
     }
 
 }
