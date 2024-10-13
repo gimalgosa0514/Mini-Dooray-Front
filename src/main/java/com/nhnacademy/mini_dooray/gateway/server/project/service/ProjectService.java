@@ -79,7 +79,7 @@ public class ProjectService {
     }
 
     public MessageDto addProjectMember(String projectId, ProjectMemberAddRequest projectMemberAddRequest) {
-        String url = URL+"/project/"+projectId+"member";
+        String url = URL+"/project/"+projectId+"/member";
 
         try{
             ResponseEntity<MessageDto> response = adapter.post(url,projectMemberAddRequest);
@@ -94,4 +94,6 @@ public class ProjectService {
 
         }
     }
+
+    
 }
