@@ -1,5 +1,6 @@
 package com.nhnacademy.mini_dooray.gateway.server.account.service;
 
+import com.nhnacademy.mini_dooray.gateway.server.account.adapter.MemberAdapter;
 import com.nhnacademy.mini_dooray.gateway.server.account.domain.MemberRegistrationRequest;
 import com.nhnacademy.mini_dooray.gateway.server.account.domain.MemberLoginResponse;
 import com.nhnacademy.mini_dooray.gateway.server.account.exception.MemberNotFoundException;
@@ -17,17 +18,16 @@ import org.springframework.web.client.HttpServerErrorException;
 @RequiredArgsConstructor
 public class AccountService {
 
-    private final String ACCOUNT_API_URL = "http://localhost:8081/api";
     private final PasswordEncoder passwordEncoder;
-    private final Adapter adapter;
+    private final MemberAdapter adapter;
 
     public MessageDto register(MemberRegistrationRequest request) {
 
-        String uri = "/member";
+
 
         try{
             request.setPassword(passwordEncoder.encode(request.getPassword()));
-            ResponseEntity<MessageDto> response =  adapter.post(ACCOUNT_API_URL + uri, request);
+            ResponseEntity<MessageDto> response =  adapter.register(request);
 
             if (response.getStatusCode().is2xxSuccessful()) {
                 return response.getBody();
@@ -42,10 +42,10 @@ public class AccountService {
     }
 
     public MemberLoginResponse getMember(String userId){
-        String uri = "/member/" + userId;
+
 
         try{
-            ResponseEntity<MemberLoginResponse> response = adapter.get(ACCOUNT_API_URL + uri, MemberLoginResponse.class);
+            ResponseEntity<MemberLoginResponse> response = adapter.getMember(userId);
 
             if (response.getStatusCode().is2xxSuccessful()) {
                 return response.getBody();

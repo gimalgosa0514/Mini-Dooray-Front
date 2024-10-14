@@ -24,7 +24,7 @@ import java.util.List;
 public class TagService {
 
     private final Adapter adapter;
-    private final String TAG_API_URL = "http://localhost:8082/api/project/";
+    private final String TAG_API_URL = "http://localhost:8083/api/project/";
 
     public List<TagResponse> getTags(Long projectId) {
         String uri = projectId+"/tag";

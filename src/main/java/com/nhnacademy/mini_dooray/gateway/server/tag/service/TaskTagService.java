@@ -16,7 +16,7 @@ import org.springframework.web.client.HttpServerErrorException;
 public class TaskTagService {
 
     private final Adapter adapter;
-    private final String TASK_TAG_API_URL = "http://localhost:8082/api/project/";
+    private final String TASK_TAG_API_URL = "http://localhost:8083/api/project/";
 
     public MessageDto attachTag(Long projectId, Long taskId, TaskTagRegistrationRequest request){
         String uri = projectId + "/task/" + taskId + "/tag";

@@ -1,5 +1,6 @@
 package com.nhnacademy.mini_dooray.gateway.server.comment.service;
 
+import com.nhnacademy.mini_dooray.gateway.server.adapter.CommentAdapter;
 import com.nhnacademy.mini_dooray.gateway.server.comment.domain.CommentRegistrationRequest;
 import com.nhnacademy.mini_dooray.gateway.server.comment.domain.CommentResponse;
 import com.nhnacademy.mini_dooray.gateway.server.comment.domain.CommentUpdateRequest;
@@ -22,14 +23,14 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CommentService {
-    private final Adapter adapter;
-    private final String API_COMMENT_URL = "http://localhost:8082/api";
+    private final CommentAdapter adapter;
+
 
     public List<CommentResponse> getComments(Long projectId, Long taskId) {
-        String uri = "/project/" + projectId + "/task/" + taskId + "/comment";
+
 
         try {
-            ResponseEntity<List<CommentResponse>> response = adapter.getList(API_COMMENT_URL + uri, new ParameterizedTypeReference<List<CommentResponse>>() {});
+            ResponseEntity<List<CommentResponse>> response = adapter.getComments(projectId,taskId);
 
             if (response.getStatusCode().is2xxSuccessful()) {
                 return response.getBody();
@@ -42,10 +43,10 @@ public class CommentService {
     }
 
     public MessageDto createComment(Long projectId, Long taskId, CommentRegistrationRequest request){
-        String uri = "/project/" + projectId + "/task/" + taskId + "/comment";
+
 
         try {
-            ResponseEntity<MessageDto> response = adapter.post(API_COMMENT_URL + uri, request);
+            ResponseEntity<MessageDto> response = adapter.createComment(projectId,taskId,request);
             if (response.getStatusCode().is2xxSuccessful()) {
                 return response.getBody();
             }
@@ -57,10 +58,10 @@ public class CommentService {
     }
 
     public MessageDto updateComment(Long projectId, Long taskId, Long commentId, CommentUpdateRequest request){
-        String uri = "/project/" + projectId + "/task/" + taskId + "/comment/" + commentId;
+
 
         try {
-            ResponseEntity<MessageDto> response = adapter.put(API_COMMENT_URL + uri, request);
+            ResponseEntity<MessageDto> response = adapter.updateComment(projectId,taskId,commentId, request);
             if (response.getStatusCode().is2xxSuccessful()) {
                 return response.getBody();
             }
@@ -73,10 +74,10 @@ public class CommentService {
     }
 
     public MessageDto deleteComment(Long projectId, Long taskId, Long commentId){
-        String uri = "/project/" + projectId + "/task/" + taskId + "/comment/" + commentId;
+
 
         try {
-            ResponseEntity<MessageDto> response = adapter.delete(API_COMMENT_URL + uri);
+            ResponseEntity<MessageDto> response = adapter.deleteComment(projectId,taskId,commentId);
             if (response.getStatusCode().is2xxSuccessful()) {
                 return response.getBody();
             }

@@ -24,7 +24,7 @@ import java.util.List;
 public class TaskService {
 
     private final Adapter adapter;
-    private final String URL = "http://localhost:8082/api";
+    private final String URL = "http://localhost:8083/api";
 
     public TaskResponse getTask(Long projectId, Long taskId) {
         String uri = "/project/"+projectId+"/task/"+taskId;

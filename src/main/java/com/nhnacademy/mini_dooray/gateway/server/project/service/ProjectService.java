@@ -21,7 +21,7 @@ import java.util.List;
 public class ProjectService {
 
     private final Adapter adapter;
-    private final String URL = "http://localhost:8082/api";
+    private final String URL = "http://localhost:8083/api";
 
     public List<Project> getProjects(String memberId) {
         String url = URL+"/project/member/"+memberId;

@@ -22,7 +22,7 @@ import java.util.List;
 public class MilestoneService {
 
     private final Adapter adapter;
-    private final String URL = "http://localhost:8082/api";
+    private final String URL = "http://localhost:8083/api";
 
     public MilestoneDto getMilestone(String projectId,String taskId) {
 
