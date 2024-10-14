@@ -32,15 +32,5 @@ public class TagController {
         return "redirect:/project/" + projectId;
     }
 
-    @PutMapping("/project/{projectId}/tag/{tagId}")
-    public String updateTag(@PathVariable Long projectId, @PathVariable Long tagId, @ModelAttribute TagUpdateRequest tagRequest) {
-        tagService.updateTag(projectId, tagId, tagRequest);
-        return "redirect:/project/" + projectId;
-    }
 
-    @DeleteMapping("/project/{projectId}/tag/{tagId}")
-    public String deleteTag(@PathVariable Long projectId, @PathVariable Long tagId) {
-        tagService.deleteTag(projectId, tagId);
-        return "redirect:/project/" + projectId;
-    }
 }

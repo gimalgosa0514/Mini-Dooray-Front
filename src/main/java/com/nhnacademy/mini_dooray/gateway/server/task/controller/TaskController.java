@@ -54,12 +54,6 @@ public class TaskController {
         return "redirect:/project/" + projectId;
     }
 
-    @PutMapping("/project/{projectId}/task/{taskId}")
-    public String updateTask(@PathVariable Long projectId, @PathVariable Long taskId, @ModelAttribute TaskUpdateRequest request) {
-        taskService.updateTask(projectId, taskId, request);
-        return "redirect:/project/" + projectId;
-    }
-
     @GetMapping("/project/{projectId}/task/{taskId}/delete")
     public String deleteTask(@PathVariable Long projectId, @PathVariable Long taskId) {
         taskService.deleteTask(projectId, taskId);
